@@ -1,0 +1,12 @@
+metapy
+pytoml
+click
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+Werkzeug
+flask-jsonpify 
+flask-restful 
+flask-cors
+
