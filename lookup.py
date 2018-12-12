@@ -6,7 +6,7 @@ class Lookup:
         self.lookup = {}
        
     def load(self):
-        with open('data\lookup.json') as json_file:  
+        with open('data/lookup.json') as json_file:  
             self.lookup = json.load(json_file)
         
     def get(self):
