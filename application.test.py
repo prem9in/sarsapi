@@ -1,10 +1,12 @@
-import math
-import sys
-import time
-import metapy
-import pytoml
-import application as app
+import controller
+import lookup
+import indexer
 
+
+indx = indexer.Indexer()
+lp = lookup.Lookup()
+ctrl = controller.Controller(lp, indx)
+ctrl.load()
 
 def stdout(listtoprint, title):
     print(title)
@@ -14,17 +16,18 @@ def stdout(listtoprint, title):
 
 
 def starttest():
-    searchcity = app.unknown
-    searchstate = app.unknown
-    searchzip = app.unknown
-    # get results
-    resultdocs = app.documentLookup({})
-    stdout(resultdocs, "Printing document results")
-    # filter on location
-    resultsbylocation = app.filterbyLocation(resultdocs, searchcity, searchstate, searchzip)
-    stdout(resultsbylocation, "Printing document by location")
+    searchcity = "Pittsburgh"
+    searchstate = "PA"
+    query_parameters = {"text": "", "city": searchcity, "state": searchstate}
+    sresults = ctrl.Search(query_parameters)
+    stdout(sresults, "Printing document by location")
 
+def loadfiletest():
+    lp.load()
+    lookup = lp.get()
+    stdout(lookup, "Look up")
 
 # execute
 if __name__ == '__main__':
+    
     starttest()
