@@ -9,7 +9,7 @@ import pytoml
 
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = False
+app.config["DEBUG"] = True
 cors = CORS(app, resources={r"/v1/*": {"origins": "*"}})
 
 unknown = "UNKNOWN"
@@ -78,12 +78,15 @@ def filterbyLocation(searchResults, searchcity, searchstate, searchzip):
 
     return results
     
+def mergeResults(fullresults, filtered):
+    
+
 
 @app.route('/v1/search', methods=['GET'])
 def search():
     query_parameters = request.args
-    if 'searchtext' in query_parameters:
-        searchtext = query_parameters['searchtext']
+    if 'text' in query_parameters:
+        searchtext = query_parameters['text']
     else:
         return errorNoSearchText(), 400
 
@@ -110,8 +113,10 @@ def search():
     # filter on location
     resultsbylocation = filterbyLocation(resultdocs, searchcity, searchstate, searchzip)
 
+
+
     return jsonify(resultsbylocation)
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
