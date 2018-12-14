@@ -13,12 +13,9 @@ class Controller:
         self.indexer = indexer
         self.unknown = "UNKNOWN"
 
+    # begin private methods
 
-    def load(self):
-        self.lookup.load()
-
-
-    def filterbyLocation(self, searchResults, requestParams):
+    def __filterbyLocation__(self, searchResults, requestParams):
         results = []
         searchcity = requestParams["city"].lower()
         searchstate = requestParams["state"].lower()
@@ -29,12 +26,25 @@ class Controller:
 
         return results
 
+    def __reduceResult__(self, parentList, smallList):
+        reduced = []
+        for keyitem in parentList:
+            found = False
+            for item in smallList:
+                if keyitem['business_id'] == item['business_id']:
+                    found = True
+                    break
+            if found == False:
+                reduced.append(keyitem)
+        return reduced
 
-    def extractRequestParams(self, query_parameters):
+            
+
+    def __extractRequestParams__(self, query_parameters):
         if 'text' in query_parameters:
             searchtext = query_parameters['text']
         else:
-            return self.errorNoSearchText()
+            return self.__errorNoSearchText__()
 
         if 'city' in query_parameters:
             searchcity = query_parameters['city']
@@ -58,28 +68,46 @@ class Controller:
             "zip": searchzip
         }
 
-
-    def Search(self, query_parameters):
-        
-        requestParams = self.extractRequestParams(query_parameters)
-
-        # call queryResults
-        # qresults = self.indexer.queryResults(searchtext)
-        # perform lookup
-        # resultdocs = self.lookup.documentLookup(qresults)
-        resultdocs = self.lookup.documentLookup({})
-        # filter on location
-        resultsbylocation = self.filterbyLocation(resultdocs, requestParams)
+    def __bySentiment__(self, item):
+        return float(item['sentiment'])
 
 
-
-        return resultsbylocation
-
-
-    def errorNoSearchText(self):
+    def __errorNoSearchText__(self):
         error = {
-                "code": 400, 
+                "errorCode": 400, 
                 "message": "Search Text not provided in request."
                 }
         return error
+
+    # end private methods
+
+    # begin public methods
+    def Search(self, query_parameters):
+        
+        requestParams = self.__extractRequestParams__(query_parameters)
+        if 'errorCode' in requestParams:
+            return requestParams
+
+        # call queryResults
+        # qresults = self.indexer.queryResults(requestParams['text'])
+        # perform lookup
+        # resultdocs = self.lookup.documentLookup(qresults)
+        resultdocs = self.lookup.documentLookup({}, 50)
+        # filter on location
+        resultsbylocation = self.__filterbyLocation__(resultdocs, requestParams)
+        resultsNotbylocation = self.__reduceResult__(resultdocs, resultsbylocation)
+
+        requestResults = {
+            "searchResults": sorted(resultsbylocation, key=self.__bySentiment__, reverse=True),
+            "recommendations": sorted(resultsNotbylocation, key=self.__bySentiment__, reverse=True) 
+        }
+
+        return requestResults
+
+
+    def load(self):
+        self.lookup.load()
+        self.indexer.load()
+
+    # end public methods
 

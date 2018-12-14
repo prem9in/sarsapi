@@ -7,7 +7,6 @@ import indexer
 
 debug = False
 app = flask.Flask(__name__)
-app.config["DEBUG"] = debug
 cors = CORS(app, resources={r"/v1/*": {"origins": "*"}})
 
 indx = indexer.Indexer()
