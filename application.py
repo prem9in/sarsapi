@@ -23,8 +23,12 @@ def page_not_found(e):
 @app.route('/v1/search', methods=['GET'])
 def search():
     query_parameters = request.args
+    enableTrace = False
+    if 'enabletrace' in query_parameters:
+        enableTrace = True
+
     sresults = ctrl.Search(query_parameters)
-    if debug == True:
+    if debug == True and enableTrace == True:
         resultWithTrace = {
             "response": sresults,
             "traces": trx.get()
