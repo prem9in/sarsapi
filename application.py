@@ -4,14 +4,16 @@ from flask_cors import CORS
 import controller
 import lookup
 import indexer
+import apptrace
 
-debug = False
+debug = True
 app = flask.Flask(__name__)
 cors = CORS(app, resources={r"/v1/*": {"origins": "*"}})
 
-indx = indexer.Indexer()
-lp = lookup.Lookup()
-ctrl = controller.Controller(lp, indx)
+trx = apptrace.AppTrace(debug)
+indx = indexer.Indexer(trx)
+lp = lookup.Lookup(trx)
+ctrl = controller.Controller(lp, indx, trx)
 
 @app.errorhandler(404)  
 def page_not_found(e):
@@ -22,6 +24,13 @@ def page_not_found(e):
 def search():
     query_parameters = request.args
     sresults = ctrl.Search(query_parameters)
+    if debug == True:
+        resultWithTrace = {
+            "response": sresults,
+            "traces": trx.get()
+        }
+        return jsonify(resultWithTrace)
+
     return jsonify(sresults)
 
 

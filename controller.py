@@ -8,9 +8,10 @@ import pytoml
 
 class Controller:
 
-    def __init__(self, lookup, indexer):
+    def __init__(self, lookup, indexer, trace):
         self.lookup = lookup
         self.indexer = indexer
+        self.trace = trace
         self.unknown = "UNKNOWN"
 
     # begin private methods
@@ -19,11 +20,12 @@ class Controller:
         results = []
         searchcity = requestParams["city"].lower()
         searchstate = requestParams["state"].lower()
-
+        self.trace.log("Controller.__filterbyLocation__", "Location: City: {} State: {}".format(searchcity, searchstate))
+        self.trace.log("Controller.__filterbyLocation__", "Number of items in original results: {}".format(len(searchResults)))
         for res in searchResults:
             if searchcity != self.unknown and searchstate != self.unknown and res['city'].lower() == searchcity and res['state'].lower() == searchstate:
                 results.append(res)
-
+        self.trace.log("Controller.__filterbyLocation__", "Number of items in after filter: {}".format(len(results)))
         return results
 
     def __reduceResult__(self, parentList, smallList):

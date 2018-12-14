@@ -1,11 +1,12 @@
 import controller
 import lookup
 import indexer
+import apptrace
 
-
-indx = indexer.Indexer()
-lp = lookup.Lookup()
-ctrl = controller.Controller(lp, indx)
+trx = apptrace.AppTrace(True)
+indx = indexer.Indexer(trx)
+lp = lookup.Lookup(trx)
+ctrl = controller.Controller(lp, indx, trx)
 
 
 def stdout(listtoprint, title):
@@ -23,6 +24,7 @@ def starttest():
     sresults = []
     sresults.append(ctrl.Search(query_parameters))
     stdout(sresults, "Printing document by location")
+    stdout(trx.get(), "Traces")
 
 def loadlookuptest():
     lp.load()

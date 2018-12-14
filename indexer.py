@@ -4,8 +4,9 @@ import json
 
 class Indexer:
 
-        def __init__(self):
+        def __init__(self, trace):
                 self.index = {}
+                self.trace = trace
                 self.num_results = 10
        
         def load(self):
