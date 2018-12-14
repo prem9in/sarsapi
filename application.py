@@ -35,6 +35,6 @@ def search():
 
 
 if __name__ == '__main__':
-   
+    trx.log("__main__", "calling ctrl.load()")
     ctrl.load()
     app.run(debug=debug)

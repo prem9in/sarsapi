@@ -108,7 +108,9 @@ class Controller:
 
 
     def load(self):
+        self.trace.log("Controller.load", "calling lookup.load()")
         self.lookup.load()
+        self.trace.log("Controller.load", "calling indexer.load()")
         self.indexer.load()
 
     # end public methods
