@@ -3,7 +3,7 @@
 class Setting:
 
     def __init__(self):
-        self.debugMode = True
+        self.debugMode = False
         self.lookupFilePath = 'data/yelp_pennsylvania_business_recommendation_dataset.json'
         self.maxSearchResults = 50
         self.cfg = 'config.toml'

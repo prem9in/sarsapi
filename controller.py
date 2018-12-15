@@ -92,11 +92,19 @@ class Controller:
         if 'errorCode' in requestParams:
             return requestParams
 
+        # lookup load
+        self.trace.log("Controller.Search", "calling lookup.load()")
+        lookupdata = self.lookup.load()
+        # load indexer
+        self.trace.log("Controller.Search", "calling indexer.load()")
+        newidx = self.indexer.load()
         # call queryResults
-        qresults = self.indexer.queryResults(requestParams['text'])
+        qresults = self.indexer.queryResults(requestParams['text'], newidx)
         # perform lookup
-        # resultdocs = self.lookup.documentLookup(qresults, self.maxSearchResults)
-        resultdocs = self.lookup.documentLookup({}, self.maxSearchResults)
+        self.trace.log("Controller.Search", "calling lookup.documentLookup() for {} items".format(self.maxSearchResults))
+       
+        resultdocs = self.lookup.documentLookup(qresults, lookupdata, self.maxSearchResults)
+        # resultdocs = self.lookup.documentLookup({}, self.maxSearchResults)
         # filter on location
         resultsbylocation = self.__filterbyLocation__(resultdocs, requestParams)
         resultsNotbylocation = self.__reduceResult__(resultdocs, resultsbylocation)

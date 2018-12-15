@@ -9,5 +9,4 @@ Werkzeug
 flask-jsonpify 
 flask-restful 
 flask-cors
-json
 gunicorn
