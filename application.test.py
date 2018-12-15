@@ -29,15 +29,17 @@ def starttest():
     stdout(sresults, "Printing document by location")
     stdout(trx.get(), "Traces")
 
+
 def loadlookuptest():
     lp.load()
     lookup = lp.get()
     stdout(lookup, "Look up")
+    stdout(trx.get(), "Traces")
+
 
 def loadindexertest():
-    indx.load()
-    index = indx.get()
-    stdout(index, "Index")
+    indx.load()        
+    stdout(trx.get(), "Traces")
 
 
 # execute
@@ -45,3 +47,4 @@ if __name__ == '__main__':
    # loadlookuptest()
    # loadindexertest()
     starttest()
+    

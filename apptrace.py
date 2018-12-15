@@ -15,6 +15,7 @@ class AppTrace:
                 "message": message
             }
             self.traces.append(logitem)
+            print(logitem)
 
         
     def get(self):

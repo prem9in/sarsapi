@@ -14,6 +14,7 @@ class Controller:
         self.trace = trace
         self.unknown = "UNKNOWN"
         self.datasetKey = setting.datasetKey
+        self.maxSearchResults = setting.maxSearchResults
 
     # begin private methods
 
@@ -92,10 +93,10 @@ class Controller:
             return requestParams
 
         # call queryResults
-        # qresults = self.indexer.queryResults(requestParams['text'])
+        qresults = self.indexer.queryResults(requestParams['text'])
         # perform lookup
-        # resultdocs = self.lookup.documentLookup(qresults)
-        resultdocs = self.lookup.documentLookup({}, 50)
+        resultdocs = self.lookup.documentLookup(qresults, self.maxSearchResults)
+        # resultdocs = self.lookup.documentLookup({}, 50)
         # filter on location
         resultsbylocation = self.__filterbyLocation__(resultdocs, requestParams)
         resultsNotbylocation = self.__reduceResult__(resultdocs, resultsbylocation)
@@ -112,7 +113,7 @@ class Controller:
         self.trace.log("Controller.load", "calling lookup.load()")
         self.lookup.load()
         self.trace.log("Controller.load", "calling indexer.load()")
-        # self.indexer.load()
+        self.indexer.load()
 
     # end public methods
 

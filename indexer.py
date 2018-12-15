@@ -13,10 +13,11 @@ class Indexer:
                 self.k1 = settings.bm25_K1
                 self.b = settings.bm25_b
                 self.k3 = settings.bm25_k3
+                self.usejsonExtraction = settings.useJsonExtraction
        
-       
+
         def load(self):
-                cfgpath = os.path.abspath(self.cfg)
+                cfgpath = os.path.abspath(self.cfg)                
                 self.trace.log("Indexer.load", "Indexing from : {}".format(cfgpath))
                 self.index = metapy.index.make_inverted_index(cfgpath)
                 self.trace.log("Indexer.load", "Number of docs : {}".format(self.index.num_docs()))
@@ -33,7 +34,19 @@ class Indexer:
                 query = metapy.index.Document()
                 query.content(searchtext) 
                 self.trace.log("Indexer.queryResults", "Getting top {} result".format(self.num_results))
-                # we need to load index (idx) at application start
+                self.trace.log("Indexer.queryResults", "Object Index {}".format(self.index))
                 top_results = ranker.score(self.index, query, num_results = self.num_results)
-                self.trace.log("Indexer.queryResults", "Returning results")
-                return top_results
+                self.trace.log("Indexer.queryResults", "Found results {}".format(len(top_results)))
+                resultContents = []
+                for num, (d_id, _) in enumerate(top_results):
+                        content = self.index.metadata(d_id).get('content')                        
+                        if content is not None:
+                                if self.usejsonExtraction == True:
+                                        doc = json.load(content)
+                                        for docId in doc:
+                                                resultContents.append(docId)
+                                else:
+                                        doc = content.split()[0]
+                                        resultContents.append(doc)
+
+                return resultContents

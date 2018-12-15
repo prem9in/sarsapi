@@ -11,3 +11,4 @@ class Setting:
         self.bm25_K1 = 1.2
         self.bm25_b = 0.75
         self.bm25_k3 = 500
+        self.useJsonExtraction = False
