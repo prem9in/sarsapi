@@ -95,8 +95,8 @@ class Controller:
         # call queryResults
         qresults = self.indexer.queryResults(requestParams['text'])
         # perform lookup
-        resultdocs = self.lookup.documentLookup(qresults, self.maxSearchResults)
-        # resultdocs = self.lookup.documentLookup({}, 50)
+        # resultdocs = self.lookup.documentLookup(qresults, self.maxSearchResults)
+        resultdocs = self.lookup.documentLookup({}, self.maxSearchResults)
         # filter on location
         resultsbylocation = self.__filterbyLocation__(resultdocs, requestParams)
         resultsNotbylocation = self.__reduceResult__(resultdocs, resultsbylocation)
