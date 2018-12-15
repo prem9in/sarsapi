@@ -2,11 +2,14 @@ import controller
 import lookup
 import indexer
 import apptrace
+import settings
 
-trx = apptrace.AppTrace(True)
-indx = indexer.Indexer(trx)
-lp = lookup.Lookup(trx)
-ctrl = controller.Controller(lp, indx, trx)
+setting = settings.Setting() 
+debug = setting.debugMode
+trx = apptrace.AppTrace(setting.debugMode)
+indx = indexer.Indexer(trx, setting)
+lp = lookup.Lookup(trx, setting)
+ctrl = controller.Controller(lp, indx, trx, setting)
 
 
 def stdout(listtoprint, title):

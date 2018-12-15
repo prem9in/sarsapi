@@ -5,15 +5,18 @@ import controller
 import lookup
 import indexer
 import apptrace
+import settings
 
-debug = True
 app = flask.Flask(__name__)
 cors = CORS(app, resources={r"/v1/*": {"origins": "*"}})
 
-trx = apptrace.AppTrace(debug)
-indx = indexer.Indexer(trx)
-lp = lookup.Lookup(trx)
-ctrl = controller.Controller(lp, indx, trx)
+setting = settings.Setting() 
+debug = setting.debugMode
+trx = apptrace.AppTrace(setting.debugMode)
+indx = indexer.Indexer(trx, setting)
+lp = lookup.Lookup(trx, setting)
+ctrl = controller.Controller(lp, indx, trx, setting)
+
 
 @app.errorhandler(404)  
 def page_not_found(e):

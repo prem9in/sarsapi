@@ -8,11 +8,12 @@ import pytoml
 
 class Controller:
 
-    def __init__(self, lookup, indexer, trace):
+    def __init__(self, lookup, indexer, trace, setting):
         self.lookup = lookup
         self.indexer = indexer
         self.trace = trace
         self.unknown = "UNKNOWN"
+        self.datasetKey = setting.datasetKey
 
     # begin private methods
 
@@ -33,7 +34,7 @@ class Controller:
         for keyitem in parentList:
             found = False
             for item in smallList:
-                if keyitem['business_id'] == item['business_id']:
+                if keyitem[self.datasetKey] == item[self.datasetKey]:
                     found = True
                     break
             if found == False:
@@ -111,7 +112,7 @@ class Controller:
         self.trace.log("Controller.load", "calling lookup.load()")
         self.lookup.load()
         self.trace.log("Controller.load", "calling indexer.load()")
-        self.indexer.load()
+        # self.indexer.load()
 
     # end public methods
 
