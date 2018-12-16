@@ -42,7 +42,7 @@ class Indexer:
                         content = index.metadata(d_id).get('content')                        
                         if content is not None:
                                 if self.usejsonExtraction == True:
-                                        doc = json.load(content)
+                                        doc = json.loads(content)
                                         for docId in doc:
                                                 resultContents.append(docId)
                                 else:
