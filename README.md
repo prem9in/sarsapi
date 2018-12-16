@@ -161,16 +161,9 @@ The modules can be classified into following
 
 | Area                 | Modules                                                      | Description                                                  |
 | -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Python virtual env   | wheel<br />venv                                              | These are used for creating virtual environment.             |
-| Python MeTA bindings | metapy<br/>pytoml                                            | ModErn Text Analysis libraries                               |
-| Flask and related    | Flask
-itsdangerous
-Jinja2
-MarkupSafe
-Werkzeug
-flask-jsonpify 
-flask-restful 
-flask-cors | Flask web framework modules                                  |
+| Python virtual env   | wheel, venv                                                  | These are used for creating virtual environment.             |
+| Python MeTA bindings | metapy, pytoml                                               | **M**od**e**rn **T**ext **A**nalysis libraries               |
+| Flask and related    | Flask, itsdangerous, Jinja2, MarkupSafe, Werkzeug, flask-jsonpify, flask-restful, flask-cors | Flask web framework modules                                  |
 | Web Server           | gunicorn                                                     | WSGI HTTP server for Python apps.. metapy libraries are not compatible within a Flask development server and hence gunicorn is needed. |
 
 
@@ -244,7 +237,7 @@ To start the API, execute
 gunicorn -w4 application:app
 ```
 
-Our API is now be running at address http://127.0.0.1:8000
+Our API is now be running at address `http://127.0.0.1:8000`
 
 Now, let's expose this API endpoint on port 80 using Nginx web server
 
@@ -300,7 +293,7 @@ sudo systemctl restart nginx
 
 #### That's it. 
 
-Our API is now available on port 80 i.e. http://127.0.0.1 or whatever is the external IP or address.
+Our API is now available on port 80 i.e. `http://127.0.0.1` or whatever is the external IP or address.
 
 
 
