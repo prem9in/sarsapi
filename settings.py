@@ -8,6 +8,7 @@ class Setting:
         self.maxSearchResults = 50
         self.cfg = 'config.toml'
         self.datasetKey = 'business_id'
+        self.dataset = 'topics'
         self.bm25_K1 = 1.2
         self.bm25_b = 0.75
         self.bm25_k3 = 500

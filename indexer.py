@@ -13,6 +13,8 @@ class Indexer:
                 self.b = settings.bm25_b
                 self.k3 = settings.bm25_k3
                 self.usejsonExtraction = settings.useJsonExtraction
+                self.datasetKey = settings.datasetKey
+                self.dataset = settings.dataset
        
 
         def load(self):
@@ -42,11 +44,18 @@ class Indexer:
                         content = index.metadata(d_id).get('content')                        
                         if content is not None:
                                 if self.usejsonExtraction == True:
-                                        doc = json.loads(content)
+                                        doc = json.loads(content)                                        
                                         for docId in doc:
-                                                resultContents.append(docId)
+                                                resultItem = {}
+                                                resultItem[self.datasetKey] = docId
+                                                resultItem[self.dataset] = doc                                                
+                                                resultContents.append(resultItem)
                                 else:
-                                        doc = content.split()[0]
-                                        resultContents.append(doc)
+                                        docId = content.split()[0]
+                                        resultItem = {}
+                                        resultItem[self.datasetKey] = docId 
+                                        resultItem[self.dataset] = content 
+                                        resultContents.append(resultItem)
+                                        
 
                 return resultContents

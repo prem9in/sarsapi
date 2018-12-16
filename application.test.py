@@ -32,8 +32,6 @@ def starttest():
 
 def loadlookuptest():
     lp.load()
-    lookup = lp.get()
-    stdout(lookup, "Look up")
     stdout(trx.get(), "Traces")
 
 

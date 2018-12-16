@@ -11,6 +11,9 @@
 -
 /
 +
+..
+...
+....
 a
 about
 above
@@ -220,6 +223,7 @@ nonetheless
 noone
 nope
 nor
+n't
 not
 nothing
 notwithstanding
@@ -421,6 +425,7 @@ worst
 would
 wow
 ye
+yelp
 yet
 year
 yippee
