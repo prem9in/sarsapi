@@ -8,14 +8,16 @@ class AppTrace:
        
 
     def log(self, methodName, message):
-        if self.traceEnabled == True:
-            logitem = {
+        logitem = {
                 "datetime": datetime.datetime.now().strftime("%c"),
                 "method": methodName,
                 "message": message
-            }
+        }
+
+        print(logitem)
+        if self.traceEnabled == True:
             self.traces.append(logitem)
-            print(logitem)
+           
 
         
     def get(self):
