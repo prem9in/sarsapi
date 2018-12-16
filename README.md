@@ -146,7 +146,7 @@ We have used Ubuntu Server 18.04 LTS as our server. However, API should work on 
 
 - nginx   
 
-  -  Is is a very popular HTTP, reverse proxy server, and a generic TCP/UDP proxy server
+  -  It is a very popular HTTP, reverse proxy server, and a generic TCP/UDP proxy server
 
 
 ### Modules
