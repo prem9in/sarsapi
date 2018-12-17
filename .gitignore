@@ -21,6 +21,7 @@
 _pycache_
 .spyproject
 __pycache__
+idx
 
 npm-debug.log*
 yarn-debug.log*
